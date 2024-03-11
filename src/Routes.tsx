@@ -10,6 +10,7 @@ import { useAuth } from "./hooks/useAuth";
 import { LinearProgress } from "@mui/material";
 import Home from "./pages/Home";
 import Layout from "./componentes/layouts/Layout";
+import ContentCategory from "./componentes/ContentCategory";
 
 const publicRoutes = [
   { path: routes.auth.login, element: <Login /> },
@@ -22,6 +23,7 @@ const privateRoutes = [
     element: <Layout />,
     children: [
       { path: routes.common.home, element: <Home /> },
+      { path: routes.category, element: <ContentCategory /> },
       { path: "*", element: <Navigate to={routes.common.home} /> },
     ],
   },

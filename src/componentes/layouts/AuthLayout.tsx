@@ -41,9 +41,16 @@ function AuthLayout({ children, variant }: AuthLayoutProps): JSX.Element {
       height="100vh"
       justifyContent="center"
       alignItems="center"
-      bgcolor="primary.main"
+      bgcolor="#1A1D29"
     >
-      <Paper sx={{ padding: 2, minWidth: "400px", textAlign: "center" }}>
+      <Paper
+        sx={{
+          padding: 2,
+          minWidth: "400px",
+          textAlign: "center",
+          bgcolor: "linear-gradient(rgb(58, 60, 74), rgb(36, 38, 50))",
+        }}
+      >
         <Stack gap={2}>
           <Typography>{title[variant]}</Typography>
           {children}

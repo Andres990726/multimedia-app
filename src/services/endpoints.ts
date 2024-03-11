@@ -1,6 +1,50 @@
 import { categoryData } from "../mocks/data";
-import { ICategory } from "../utils/models";
+import { ICategory, IDetailMovie, IMovies } from "../utils/models";
 import { keys } from "../utils/storage";
+import axios from "axios";
+
+const getMovies:()=> Promise<IMovies> = async () => {
+  const options = {
+    method: "GET",
+    url: "https://api.themoviedb.org/3/discover/movie",
+    params: {
+      api_key: "f7218bfa940e99e8e8d8a839445a68d8",
+      include_adult: "false",
+      include_video: "true",
+      language: "es-CO",
+      page: "1",
+      sort_by: "popularity.desc",
+    },
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNzIxOGJmYTk0MGU5OWU4ZThkOGE4Mzk0NDVhNjhkOCIsInN1YiI6IjY1ZWUzMDkyMWJmODc2MDE4NTc3NTc2OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CS0QrTebkBH1K4S8buLr5KSrQm-LwX_gSwuJ0IfYb7Y",
+    },
+  };
+
+  const response = await axios.request(options);
+  return response.data;
+};
+
+const getMovie: (url:string)=> Promise<IDetailMovie> = async (url:string) =>{
+
+  const options = {
+    method: "GET",
+    url: url,
+    params: {
+      api_key: "f7218bfa940e99e8e8d8a839445a68d8",
+      append_to_response:"videos",
+      language: "es-CO",
+    },
+    headers: {
+      accept: "application/json",
+      Authorization:
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNzIxOGJmYTk0MGU5OWU4ZThkOGE4Mzk0NDVhNjhkOCIsInN1YiI6IjY1ZWUzMDkyMWJmODc2MDE4NTc3NTc2OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CS0QrTebkBH1K4S8buLr5KSrQm-LwX_gSwuJ0IfYb7Y",
+    },
+  };
+  const response = await axios.request(options);
+  return response.data;
+}
 
 const auth = {
   email: "codegods@codegods.com",
@@ -48,4 +92,6 @@ export const api = {
   getAuth,
   signOut,
   getCategories,
+  getMovies,
+  getMovie
 };

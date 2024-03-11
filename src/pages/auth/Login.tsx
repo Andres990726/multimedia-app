@@ -25,7 +25,10 @@ function Login() {
   return (
     <AuthLayout variant="login">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack gap={2}>
+        <Stack
+          gap={2}
+          bgcolor={"linear-gradient(rgb(58, 60, 74), rgb(36, 38, 50))"}
+        >
           <TextField
             disabled
             type="email"

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { usePopover } from "../../hooks/usePopover";
 import { AccountPopover } from "./AccountPopover";
@@ -20,6 +21,7 @@ const MuiAppBar = styled(AppBar)(({ theme }) => ({
 function Header() {
   const accountPopover = usePopover();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -29,6 +31,7 @@ function Header() {
             alignItems: "center",
             justifyContent: "space-between",
             flexDirection: "row",
+            color: "white",
           }}
         >
           <Stack
@@ -39,8 +42,10 @@ function Header() {
               gap: 2,
             }}
           >
-            <Typography variant="h6">Disney</Typography>
-            <Button color="inherit">Inicio</Button>
+            <Typography variant="h6">Multimedia APP</Typography>
+            <Button color="inherit" onClick={() => navigate("/")}>
+              Inicio
+            </Button>
             <Button color="inherit">Búsqueda</Button>
             <Button color="inherit">Mi Lista</Button>
             <Button color="inherit">Originales</Button>
@@ -55,9 +60,7 @@ function Header() {
               gap: 2,
             }}
           >
-            <Typography sx={{ color: "text.secondary" }}>
-              Hola {user.username}
-            </Typography>
+            <Typography>{user.username}</Typography>
             <Avatar
               onClick={accountPopover.handleOpen}
               ref={accountPopover.anchorRef}

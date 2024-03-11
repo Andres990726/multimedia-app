@@ -4,7 +4,6 @@ import { Box, styled } from "@mui/material";
 
 const Container = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
-  borderTopLeftRadius: theme.spacing(2),
   padding: theme.spacing(1.5),
   overflow: "auto",
   display: "grid",

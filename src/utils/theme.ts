@@ -9,7 +9,7 @@ export const DefaultPalette = {
     main: '#6E7072'
   },
   background: {
-    default: '#FFFFFF',
+    default: '#1A1D29',
     surface: '#F2F3EF'
   }
 }
@@ -21,7 +21,6 @@ export const theme = createTheme({
     MuiButton: {
       defaultProps: {
         disableElevation: true,
-        variant: 'contained',
         size: 'large'
       },
       styleOverrides: {

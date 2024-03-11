@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../services/endpoints";
+import { useNavigate } from "react-router-dom";
 
 interface AccountPopoverProps {
   anchorEl: HTMLElement | null;
@@ -21,6 +22,7 @@ export const AccountPopover = ({
   open,
 }: AccountPopoverProps): JSX.Element => {
   const { user, mutate } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <Popover
@@ -43,6 +45,7 @@ export const AccountPopover = ({
           onClick={() => {
             api.signOut();
             mutate();
+            navigate("/auth/login");
           }}
         >
           Cerrar sesión

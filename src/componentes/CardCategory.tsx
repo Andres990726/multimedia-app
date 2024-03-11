@@ -9,7 +9,9 @@ export default function CardCategory({
   type: string;
 }) {
   return (
-    <Card>
+    <Card
+      sx={{ background: "linear-gradient(rgb(58, 60, 74), rgb(36, 38, 50))" }}
+    >
       <CardContent
         component={Link}
         to={"/category/" + { type }}
@@ -19,6 +21,8 @@ export default function CardCategory({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          color: "white",
+          textDecoration: "none",
         }}
       >
         <Typography sx={{ fontWeight: "600", fontSize: "30px" }}>
