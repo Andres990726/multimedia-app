@@ -4,21 +4,37 @@ import { Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { api } from "../../services/endpoints";
 import { useAuth } from "../../hooks/useAuth";
+import { enqueueSnackbar } from "notistack";
 
 function Login() {
   const { mutate } = useAuth();
 
-  const { register, handleSubmit, formState } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
     defaultValues: {
       email: "codegods@codegods.com",
-      password: "************",
+      password: "codegods",
     },
   });
 
-  const onSubmit = () => {
+  const onSubmit = (values: Record<string, string>) => {
     return api
-      .signInWithEmailAndPassword()
-      .then(() => mutate())
+      .signInWithEmailAndPassword({
+        email: values.email,
+        password: values.password,
+      })
+      .then((response) => {
+        if (response) mutate();
+        else
+          enqueueSnackbar({
+            message: "Email o contraseña incorrectos",
+            variant: "error",
+          });
+      })
+
       .catch(() => {});
   };
 
@@ -30,21 +46,35 @@ function Login() {
           bgcolor={"linear-gradient(rgb(58, 60, 74), rgb(36, 38, 50))"}
         >
           <TextField
-            disabled
             type="email"
-            {...register("email")}
+            {...register("email", {
+              required: "Email is required.",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: "Email is not valid.",
+              },
+            })}
             label="Correo"
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
           <TextField
-            disabled
             type="password"
-            {...register("password")}
+            {...register("password", {
+              required: "Password is required.",
+              minLength: {
+                value: 4,
+                message: "Password should be at-least 4 characters.",
+              },
+            })}
             label="Contraseña"
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
           <LoadingButton
             type="submit"
             variant="contained"
-            loading={formState.isSubmitting}
+            loading={isSubmitting}
           >
             Iniciar sesión
           </LoadingButton>

@@ -3,7 +3,7 @@ import { ICategory, IDetailMovie, IMovies } from "../utils/models";
 import { keys } from "../utils/storage";
 import axios from "axios";
 
-const getMovies:()=> Promise<IMovies> = async () => {
+const getMovies: () => Promise<IMovies> = async () => {
   const options = {
     method: "GET",
     url: "https://api.themoviedb.org/3/discover/movie",
@@ -26,14 +26,15 @@ const getMovies:()=> Promise<IMovies> = async () => {
   return response.data;
 };
 
-const getMovie: (url:string)=> Promise<IDetailMovie> = async (url:string) =>{
-
+const getMovie: (url: string) => Promise<IDetailMovie> = async (
+  url: string
+) => {
   const options = {
     method: "GET",
     url: url,
     params: {
       api_key: "f7218bfa940e99e8e8d8a839445a68d8",
-      append_to_response:"videos",
+      append_to_response: "videos",
       language: "es-CO",
     },
     headers: {
@@ -44,11 +45,12 @@ const getMovie: (url:string)=> Promise<IDetailMovie> = async (url:string) =>{
   };
   const response = await axios.request(options);
   return response.data;
-}
+};
 
 const auth = {
   email: "codegods@codegods.com",
   fullname: "codegods",
+  password: "codegods",
   jwt: "",
   username: "codegods",
 };
@@ -57,8 +59,11 @@ const deleteAuth = () => {
   window.localStorage.removeItem(keys.auth);
 };
 
-const setAuth = () => {
-  window.localStorage.setItem(keys.auth, JSON.stringify(auth));
+const setAuth = ({ email, password }: { email: string; password: string }) => {
+  if (email === auth.email && password === auth.password) {
+    window.localStorage.setItem(keys.auth, JSON.stringify(auth));
+    return true;
+  } else return false;
 };
 
 const getAuth = () => {
@@ -67,11 +72,17 @@ const getAuth = () => {
   else return undefined;
 };
 
-const signInWithEmailAndPassword = () => {
+const signInWithEmailAndPassword = ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      setAuth();
-      resolve(auth);
+      const response = setAuth({ email, password });
+      resolve(response);
     }, 1000);
   });
 };
@@ -93,5 +104,5 @@ export const api = {
   signOut,
   getCategories,
   getMovies,
-  getMovie
+  getMovie,
 };
